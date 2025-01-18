@@ -20,6 +20,9 @@
   height: 602px;
   margin-right: 70px;
 }
+.aboutMe__img img{
+  object-fit: cover;
+}
 
 .aboutMe__content.element-animation {
   padding-top: 7px;

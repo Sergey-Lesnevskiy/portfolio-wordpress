@@ -16,7 +16,7 @@ get_header();
 ?>
 
   <main>
-    <section class="hero">
+    <section class="hero" style="background-image: url(<?php the_field('hero_img') ?>);">
       <div class="hero__container">
         <div class="hero__social element-animation social social--vertical">
           <span class="social__title">Социальные сети</span>
@@ -54,8 +54,8 @@ get_header();
         </div>
 
         <div class="hero__content">
-          <h1 class="hero__title">Меня зовут Александра Смит</h1>
-          <p class="hero__desc">Я web-разработчик из города Москва</p>
+          <h1 class="hero__title">Меня зовут <?php the_field('hero_title'); ?></h1>
+          <p class="hero__desc"><?php the_field('hero_description'); ?></p>
           <div class="hero__buttons">
             <a class="button button--portfolio active" href="#contacts">Портфолио</a>
             <a class="button button--portfolio" href="#aboutMe">Про меня</a>
@@ -66,46 +66,30 @@ get_header();
     <section class="aboutMe element-animation" id="aboutMe">
       <div class="aboutMe__container ">
         <div class="aboutMe__img">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/jpg_png/Photo.png" alt="">
+          <img src="<?php the_field('about_img'); ?>" alt="">
         </div>
         <div class="aboutMe__content element-animation">
           <p class="aboutMe__title">Про меня</p>
-          <h2 class="aboutMe__subtitle">Меня зовут Александра</h2>
+          <h2 class="aboutMe__subtitle">Меня зовут <?php the_field('about_title') ?>)</h2>
           <p class="aboutMe__description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum
+          <?php the_field('about_description') ?>
           </p>
           <ul class="aboutMe__list aboutMe__skills">
-            <li class="aboutMe__skill-item item">
-              <div class="item__icon"><img src="<?php echo get_template_directory_uri(); ?>/assets/svg/web_development.svg" alt="" class="item__img"></div>
-              <div class="item__text">
-                <b class="item__title">Web-разработка</b>
-                <p class="item__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. </p>
-              </div>
-
-            </li>
-            <li class="aboutMe__skill-item item">
-              <div class="item__icon"><img src="<?php echo get_template_directory_uri(); ?>/assets/svg/Mobile_dev.svg" alt="" class="item__img"></div>
-              <div class="item__text">
-                <b class="item__title">Разработка приложений</b>
-                <p class="item__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. </p>
-              </div>
-
-            </li>
-            <li class="aboutMe__skill-item item">
-              <div class="item__icon"><img src="<?php echo get_template_directory_uri(); ?>/assets/svg/Design.svg" alt="" class="item__img"></div>
-              <div class="item__text">
-                <b class="item__title">UI/UX Design</b>
-                <p class="item__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. </p>
-              </div>
-
-            </li>
+          <?php
+            // get the field value
+            $slides = carbon_get_theme_option( 'portfolio_skills' );
+            if( $slides ) {
+              foreach( $slides as $slide ) {
+            echo  '<li class="aboutMe__skill-item item">';
+            echo ' <div class="item__icon"><img src="' .  $slide[ 'portfolio_skill_photo' ]  . '" alt="" class="item__img"></div>';
+            echo    '<div class="item__text">';
+            echo      '<b class="item__title">' .  esc_html( $slide[ 'portfolio_skill_title' ] ).'</b>';
+            echo      '<p class="item__description">'. esc_html( $slide[ 'portfolio_skill_description' ] ). '</p>';
+            echo    '</div>';
+            echo ' </li>';
+              }
+            }
+            ?>
           </ul>
         </div>
       </div>
@@ -119,62 +103,81 @@ get_header();
             <div class="benefit__column education">
               <div class="education__title">Образование</div>
               <ul class="education__list">
-                <li class="education__item item">
+              <?php
+              $education_first = get_field('education_first');	
+              if( $education_first ): ?>
+              <li class="education__item item">
                   <div class="item__icon">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/University.svg" alt="">
                   </div>
                   <div class="item__text">
-                    <b class="item__title">МГТУ им. Н. Э. Баумана</b>
+                    <b class="item__title"><?php echo $education_first['education_first_title']; ?></b>
                     <p class="item__subtitle">
-                      Диплом магистра | Москва (2014-2020)
+                    <?php echo $education_first['education_first_subtitle']; ?>
                     </p>
                   </div>
-                  <p class="item__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmo. </p>
+                  <p class="item__description">
+                  <?php echo $education_first['education_first_description']; ?>
+                  </p>
                 </li>
-                <li class="education__item item">
-                  <div class="item__icon education__item-udemy">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/Courses.svg" alt="">
+                <?php endif;
+                $education_second = get_field('education_second');	
+                if( $education_second ): ?>
+                    <li class="education__item item">
+                  <div class="item__icon">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/University.svg" alt="">
                   </div>
                   <div class="item__text">
-                    <b class="item__title">Udemy</b>
+                    <b class="item__title"><?php echo $education_second['education_second_title']; ?></b>
                     <p class="item__subtitle">
-                      Курсы по Web-разработке
+                    <?php echo $education_second['education_second_subtitle']; ?>
                     </p>
                   </div>
-                  <p class="item__description item__description-unemy ">Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmo. </p>
+                  <p class="item__description">
+                  <?php echo $education_second['education_second_description']; ?>
+                  </p>
                 </li>
+                <?php endif; ?>
               </ul>
             </div>
             <div class="benefit__column experience">
               <div class="experience__title">Опыт работы</div>
               <ul class="experience__list">
-                <li class="experience__item item">
-                  <div class="item__icon"><img src="<?php echo get_template_directory_uri(); ?>/assets/svg/Developer.svg" alt=""></div>
+              <?php 
+              $experience_first = get_field('experience_first');	
+                if( $experience_first): ?>
+                    <li class="experience__item item">
+                  <div class="item__icon">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/Developer.svg"" alt="">
+                  </div>
                   <div class="item__text">
-                    <b class="item__title">Front-End Developer</b>
-                    <p class="item__subtitle"><span>EPAM | Москва (2018-2019)</span>
+                    <b class="item__title"><?php echo $experience_first['experience_first_title']; ?></b>
+                    <p class="item__subtitle">
+                    <?php echo $experience_first['experience_first_subtitle']; ?>
                     </p>
                   </div>
-                  <p class="item__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmo. </p>
+                  <p class="item__description">
+                  <?php echo $experience_first['experience_first_description']; ?>
+                  </p>
                 </li>
-                <li class="experience__item item">
-                  <div class="item__icon"><img src="<?php echo get_template_directory_uri(); ?>/assets/svg/designer.svg" alt=""></div>
+                <?php endif;
+              $experience_second = get_field('experience_second');
+                if( $experience_second): ?>
+                    <li class="experience__item item">
+                  <div class="item__icon">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/Developer.svg"" alt="">
+                  </div>
                   <div class="item__text">
-                    <b class="item__title">UI/UX Designer</b>
-                    <p class="item__subtitle"><span>Squad Team | Москва (2018)</span>
+                    <b class="item__title"><?php echo $experience_second['experience_second_title']; ?></b>
+                    <p class="item__subtitle">
+                    <?php echo $experience_second['experience_second_subtitle']; ?>
                     </p>
                   </div>
-                  <p class="item__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmo. </p>
+                  <p class="item__description">
+                  <?php echo $experience_second['experience_second_description']; ?>
+                  </p>
                 </li>
+                <?php endif; ?>
               </ul>
             </div>
           </div>
@@ -187,110 +190,39 @@ get_header();
         <p class="skills__title">Навыки</p>
         <h2 class="skills__subtitle">Что я использую в работе</h2>
         <ul class="skills__grid-cards cards__list">
-          <li class="card__item">
-            <div class="card__img element-animation">
-              <img class="card__img-html" src="<?php echo get_template_directory_uri(); ?>/assets/svg/html5.svg" alt="">
-            </div>
-            <b class="card__title">HTML5</b>
-            <p class="card__description">
-              Именно он создает каркас вашего сайта или приложения, а пятая версия позволит мне создавать более
-              SEO-оптимизированную структуру вашего продукта
-            </p>
-          </li>
-          <li class="card__item">
-            <div class="card__img element-animation">
-              <img class="card__img-css3" src="<?php echo get_template_directory_uri(); ?>/assets/svg/css3.svg" alt="">
-            </div>
-            <b class="card__title">CSS3</b>
-            <p class="card__description">
-              Этот язык стилей позволяет мне создавать абсолютно любой внешний вид вашего сайта или приложения. Все ограничивается только вашей фантазией!
-            </p>
-          </li>
-          <li class="card__item">
-            <div class="card__img element-animation">
-              <img class="card__img-js" src="<?php echo get_template_directory_uri(); ?>/assets/svg/JS.svg" alt="">
-            </div>
-            <b class="card__title">Java Script</b>
-            <p class="card__description">
-              Этот язык программирования позволяет оживить все что угодно: слайдеры, окна, подсказки, вкладки, получение данных от сервера и многое другое
-            </p>
-          </li>
-          <li class="card__item">
-            <div class="card__img element-animation">
-              <img class="card__img-Jquery" src="<?php echo get_template_directory_uri(); ?>/assets/svg/Jquery.svg" alt="">
-            </div>
-            <b class="card__title">Jquery</b>
-            <p class="card__description">
-              Библиотека Jquery позволит ускорить разработку. Без необходимости интегрировать в проект мы её не будем, но навык работы с ней присутствует
-            </p>
-          </li>
-          <li class="card__item">
-            <div class="card__img element-animation">
-              <img class="card__img-react" src="<?php echo get_template_directory_uri(); ?>/assets/svg/React.svg" alt="">
-            </div>
-            <b class="card__title">React</b>
-            <p class="card__description">
-              Эта библиотека позволяет создавать web-приложения. Мы можем создать максимально интерактивный продукт именно под ваши цели
-            </p>
-          </li>
-          <li class="card__item">
-            <div class="card__img element-animation">
-              <img class="card__img-node" src="<?php echo get_template_directory_uri(); ?>/assets/svg/Node.js.svg" alt="">
-            </div>
-            <b class="card__title">Node.js</b>
-            <p class="card__description">
-              Эта платформа позволяет создавать бэкенд для вашего продукта - “мозги”, которые будут выполнять действия, которые пользователь не видит
-            </p>
-          </li>
-          <li class="card__item">
-            <div class="card__img element-animation">
-              <img class="card__img-mongo" src="<?php echo get_template_directory_uri(); ?>/assets/svg/Mongo.db.svg" alt="">
-            </div>
-            <b class="card__title">Mongo.db</b>
-            <p class="card__description">
-              Это нереляционная база данных, которая будет хранить данные вашего сайта или приложения
-            </p>
-          </li>
-
+        <?php
+            // get the field value
+            $tools = carbon_get_theme_option( 'portfolio_tools' );
+            if( $tools ):
+              foreach( $tools as $tool ):
+                ?>
+              <li class="card__item">
+                <div class="card__img element-animation">
+                  <img class="card__img-html" src="<?php echo $tool['portfolio_tool_photo']?>" alt="">
+                </div>
+                <b class="card__title"><?php echo $tool[ 'portfolio_tool_title' ]?></b>
+                <p class="card__description">
+                  <?php echo $tool[ 'portfolio_tool_description' ]?>
+                </p>
+                </li>
+            <?php endforeach; ?>
+            <?php endif; ?>
         </ul>
         <ul class="skills_grid-progress progress__list">
-          <li class="progress__item">
-            <p class="progress__caption">Создание сайтов
-              <span>100%</span>
+        <?php
+            // get the field value
+            $progress_list = carbon_get_theme_option( 'progress__list' );
+            if( $progress_list ):
+              foreach( $progress_list as $item ):
+                ?>
+            <li class="progress__item">
+            <p class="progress__caption"><?php echo $item['portfolio_progress_title']?>
+              <span><?php echo $item['portfolio_progress_quantity']?>%</span>
             </p>
             <div class="progress__bar site element-animation"></div>
           </li>
-          <li class="progress__item">
-            <p class="progress__caption ">Создание приложений
-              <span>85%</span>
-            </p>
-            <div class="progress__bar app element-animation"></div>
-          </li>
-          <li class="progress__item">
-            <p class="progress__caption">Работа с данными
-              <span>90%</span>
-            </p>
-            <div class="progress__bar data element-animation"></div>
-          </li>
-          <li class="progress__item">
-            <p class="progress__caption">Креативность
-              <span>75%</span>
-            </p>
-            <div class="progress__bar creativity element-animation"></div>
-          </li>
-          <li class="progress__item">
-            <p class="progress__caption">Создание дизайна
-              <span>90%</span>
-            </p>
-            <div class="progress__bar design element-animation"></div>
-          </li>
-          <li class="progress__item">
-            <p class="progress__caption">Soft skills
-              <span>95%</span>
-            </p>
-            <div class="progress__bar soft-skills element-animation"></div>
-          </li>
-    
+            <?php endforeach; ?>
+            <?php endif; ?>
         </ul>
       </div>
     </section>

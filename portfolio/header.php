@@ -33,16 +33,35 @@
   </div>
   <aside class="menu">
     <span class="menu__cross"></span>
-    <nav class="menu__nav">
-      <ul class="menu__list">
+    <!-- <nav class="menu__nav"> -->
+      <!-- <ul class="menu__list">
         <li class="menu__item"><a href="#aboutMe">ПРО МЕНЯ</a></li>
         <li class="menu__item"><a href="#benefit">МОЙ ОПЫТ</a></li>
         <li class="menu__item"><a href="#skills">МОИ НАВЫКИ</a></li>
         <li class="menu__item"><a href="#portfolio">МОИ РАБОТЫ</a></li>
         <li class="menu__item"><a href="/">ПРАЙС-ЛИСТ</a></li>
         <li class="menu__item"><a href="#contacts">КОНТАКТЫ</a></li>
-      </ul>
-    </nav>
+      </ul> -->
+      <?php wp_nav_menu( [
+	'theme_location'  => 'top',
+	'menu'            => 'top menu',
+	'container'       => 'nav',
+	'container_class' => 'menu__nav',
+	'container_id'    => '',
+	'menu_class'      => 'menu__list',
+	'menu_id'         => '',
+	'echo'            => true,
+	'fallback_cb'     => 'wp_page_menu',
+	'before'          => '',
+	'after'           => '',
+	'link_before'     => '',
+	'link_after'      => '',
+	'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+	'depth'           => 0,
+	'walker'          => '',
+] );
+?>
+    <!-- </nav> -->
     <div class="menu__socials social">
       <ul class="social__list">
         <li class="social__item">
