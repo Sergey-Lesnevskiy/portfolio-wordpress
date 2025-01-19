@@ -4,14 +4,15 @@ const MENU = document.querySelector(".menu");
 const SOCIAL_LINKS = document.querySelector(".menu__socials");
 const OVERLAY_CONTENT = document.querySelector(".menu__overlay");
 const BODY = document.querySelector("body");
+
 const FORM_BUTTON = document.querySelector(".contacts__button");
-const INPUT_MAIL = document.querySelector("#email");
+const INPUT_MAIL = document.querySelector(".wpcf7-email");
 const EMAIL_LABEL = document.querySelector(".email");
 
-const INPUT_NAME = document.querySelector("#name");
+const INPUT_NAME = document.querySelector(".wpcf7-text");
 const NAME_LABEL = document.querySelector(".name");
 
-const TEXT_SMS = document.querySelector("#textarea");
+const TEXT_SMS = document.querySelector(".wpcf7-textarea");
 const SMS_LABEL = document.querySelector(".form__label-textarea");
 
 const BTNS_HERO = document.querySelectorAll(".button--portfolio");

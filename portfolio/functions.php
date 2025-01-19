@@ -43,3 +43,5 @@ function fix_svg_mime_type( $data, $file, $filename, $mimes, $real_mime = '' ){
 	}
 	return $data;
 }
+
+add_filter('wpcf7_autop_or_not', '__return_false');

@@ -255,7 +255,7 @@ get_header();
     <section class="contacts element-animation" id="contacts">
         <div class="contacts__container">
           <div class="contacts__img">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/jpg_png/Photo.png" alt="">
+            <img src="<?php the_field('contact_img'); ?>" alt="">
           </div>
           <div class="contacts__content">
             <p class="contacts__title">Контакты</p>
@@ -295,7 +295,12 @@ get_header();
               </li>
             </ul>
             <p class="contacts__section-desc">Или оставьте ваши данные и я сама вам напишу:</p>
-            <form action="#" method="post" class="contacts__form form">
+              <? global $wpcf7_contact_form;
+              if ( ! ( $wpcf7_contact_form = wpcf7_contact_form( '78c1fe3' ) ) )
+              return 'Contact form not found!';
+              $form = $wpcf7_contact_form->form_html();
+              echo $form; ?>
+            <!-- <form action="#" method="post" class="contacts__form form">
               <div class="form__field">
                 <label class="form__label name" for="name">Ваше имя</label>
                 <input class="form__input element-animation" type="text" id="name" name="user_name" value="Иван" required>
@@ -317,7 +322,7 @@ get_header();
                 <input class="contacts__checkbox" type="checkbox" id="checkbox" name="textarea" required>
               </div>
               <button class="button contacts__button active" type="submit">Отправить сообщение</button>
-            </form>
+            </form> -->
           </div>
         </div>
     </section>
